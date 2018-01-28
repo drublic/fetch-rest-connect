@@ -1,0 +1,11 @@
+{
+  "name": "fetch-rest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/drublic/fetch-rest.git",
+  "author": "Hans Christian Reinl <info@drublic.de>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.16.0"
+  }
+}
