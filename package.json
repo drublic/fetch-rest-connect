@@ -1,17 +1,28 @@
 {
-  "name": "fetch-rest",
+  "name": "fetch-rest-connect",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/drublic/fetch-rest.git",
+  "repository": "https://github.com/drublic/fetch-rest-connect.git",
   "author": "Hans Christian Reinl <info@drublic.de>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint **/*.js"
+    "lint": "eslint **/*.js",
+    "test": "jest"
+  },
+  "jest": {
+    "testMatch": [
+      "**/__tests__/**/?(*.)(spec|test).js"
+    ]
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
     "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint-plugin-import": "^2.8.0",
+    "jest": "^22.1.4"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
   }
 }

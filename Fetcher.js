@@ -19,14 +19,20 @@ class Fetcher {
   }
 
   constructor(config) {
-    this.config = config
+    this.apiUrl = config.apiUrl
+
+    const endpoints = Object.keys(config.endpoints).map(key => (
+      [key, config.endpoints[key]]
+    ))
+
+    this.endpoints = new Map(endpoints)
   }
 
   getUrl(action, id, addinitinalParameters) {
-    let url = this.config.endpoint
+    let url = this.apiUrl
 
-    if (this.config.map.has(action)) {
-      url += Map.get(action)
+    if (this.endpoints.has(action)) {
+      url += `${this.endpoints.get(action)}/`
     } else {
       throw new Error(`Action "${action}" not defined`)
     }
@@ -36,7 +42,10 @@ class Fetcher {
     }
 
     if (typeof addinitinalParameters === 'object') {
-      url += `?${JSON.stringify(addinitinalParameters)}`
+      const params = Object.keys(addinitinalParameters)
+        .map(param => `${param}=${addinitinalParameters[param]}`)
+
+      url += `?${params.join('&')}`
     }
 
     return url
