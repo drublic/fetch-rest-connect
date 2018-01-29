@@ -101,22 +101,22 @@ class Fetcher {
       .fetch(endpoint, id, addinitinalParameters, undefined, 'GET')
   }
 
-  /* public */create(endpoint, data, addinitinalParameters) {
+  /* public */create(endpoint, data, addinitinalParameters = {}) {
     return this
       .fetch(endpoint, undefined, addinitinalParameters, data, 'PUT')
   }
 
-  /* public */update(endpoint, id, data, addinitinalParameters) {
+  /* public */update(endpoint, id, data, addinitinalParameters = {}) {
     return this
       .fetch(endpoint, id, addinitinalParameters, data, 'POST')
   }
 
-  /* public */upsert(endpoint, id, data, addinitinalParameters) {
+  /* public */upsert(endpoint, id, data, addinitinalParameters = {}) {
     return this
       .fetch(endpoint, id, addinitinalParameters, data, id ? 'POST' : 'PUT')
   }
 
-  /* public */delete(endpoint, id, addinitinalParameters) {
+  /* public */delete(endpoint, id, addinitinalParameters = {}) {
     return this
       .fetch(endpoint, id, addinitinalParameters, undefined, 'DELETE')
   }
