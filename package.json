@@ -10,19 +10,25 @@
     "test": "jest"
   },
   "jest": {
+    "automock": false,
     "testMatch": [
-      "**/__tests__/**/?(*.)(spec|test).js"
+      "**/__tests__/**/*.test.js"
+    ],
+    "setupFiles": [
+      "./jestSetup.js"
     ]
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
+    "babel-preset-env": "^1.6.1",
     "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "jest": "^22.1.4"
   },
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+    "jest-fetch-mock": "^1.4.1",
+    "whatwg-fetch": "^2.0.3"
   }
 }

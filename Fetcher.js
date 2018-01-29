@@ -1,3 +1,5 @@
+import 'whatwg-fetch'
+
 class Fetcher {
   static getMethod(method = 'GET', data, id) {
     if (data) {
@@ -12,9 +14,16 @@ class Fetcher {
   }
 
   static throwError(error) {
+    let responseError
+    try {
+      responseError = JSON.parse(error)
+    } catch (e) {
+      responseError = error
+    }
+
     return {
       error: true,
-      message: error,
+      message: responseError,
     }
   }
 
@@ -65,15 +74,10 @@ class Fetcher {
     }
 
     if (data) {
-      try {
-        options.body = JSON.stringify(data)
-      } catch (error) {
-        return Fetcher.throwError(error)
-      }
+      options.body = JSON.stringify(data)
     }
 
-    return window
-      .fetch(url, options)
+    return fetch(url, options)
       .then((response) => {
         if (!response.ok) {
           return Fetcher.throwError(response.statusText)

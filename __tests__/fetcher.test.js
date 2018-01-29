@@ -1,7 +1,7 @@
 import ENDPOINT_DATA from './data/foo'
 import Fetcher from '../'
 
-global.fetch = jest.fn().mockImplementation(() => Promise.resolve(ENDPOINT_DATA))
+const { fetch } = global
 
 describe('Fetcher', () => {
   const ENDPOINT = 'foo'
@@ -11,6 +11,23 @@ describe('Fetcher', () => {
     endpoints: {
       [ENDPOINT]: ENDPOINT,
     },
+  })
+
+  fetch.mockResponse(JSON.stringify(ENDPOINT_DATA))
+
+  it('returns method for given data', () => {
+    let method = Fetcher.getMethod('GET', {
+      foo: 'bar',
+    })
+    expect(method).toBe('POST')
+
+    method = Fetcher.getMethod('GET', {
+      foo: 'bar',
+    }, ID)
+    expect(method).toBe('PUT')
+
+    method = Fetcher.getMethod('GET')
+    expect(method).toBe('GET')
   })
 
   it('provides a complete url', () => {
@@ -29,5 +46,44 @@ describe('Fetcher', () => {
       env: 'bar',
     })
     expect(url).toBe(`/${ENDPOINT}/?env=bar`)
+  })
+
+  it('throws if no action is provided while getting URL', () => {
+    expect(() => {
+      fetcher.getUrl()
+    }).toThrow()
+  })
+
+  it('gets data from endpoint', (done) => {
+    expect.assertions(1)
+
+    fetcher.fetch(ENDPOINT, ID)
+      .then((data) => {
+        expect(data).toEqual(ENDPOINT_DATA)
+        done()
+      })
+  })
+
+  it('posts data to api', (done) => {
+    fetcher.fetch(ENDPOINT, ID, undefined, {
+      foo: 'baz',
+    })
+      .then((data) => {
+        expect(data).toEqual(ENDPOINT_DATA)
+        done()
+      })
+  })
+
+  it('returns error if rejected', (done) => {
+    fetch.mockRejectOnce(JSON.stringify(ENDPOINT_DATA))
+
+    fetcher.fetch(ENDPOINT)
+      .then((data) => {
+        expect(data).toEqual({
+          error: true,
+          message: ENDPOINT_DATA,
+        })
+        done()
+      })
   })
 })
