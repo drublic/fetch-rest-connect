@@ -5,7 +5,13 @@
   "repository": "https://github.com/drublic/fetch-rest.git",
   "author": "Hans Christian Reinl <info@drublic.de>",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint **/*.js"
+  },
   "devDependencies": {
-    "eslint": "^4.16.0"
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
   }
 }
