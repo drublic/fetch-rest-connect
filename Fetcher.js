@@ -60,16 +60,16 @@ class Fetcher {
     return url
   }
 
-  /* public */fetch(action, id, addinitinalParameters, data, method) {
+  /* public */fetch(action, id, addinitinalParameters, data, method, headers) {
     const url = this.getUrl(action, id, addinitinalParameters)
 
-    const headers = new Headers({
+    const headerConfig = Object.assign({
       Accept: 'application/json',
       'Content-Type': 'application/json',
-    })
+    }, headers)
 
     const options = {
-      headers,
+      headers: new Headers(headerConfig),
       method: method || Fetcher.getMethod(method, data, id),
     }
 

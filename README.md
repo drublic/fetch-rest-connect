@@ -53,6 +53,7 @@ All methods build upon the main method `fetch`:
   * `addinitinalParameters: object`, Pass get parameters for the request
   * `data: Object`, Data you want to send with the request
   * `method: ENUM('GET' | 'PUT' | 'POST' | 'DELETE') = 'GET'`, Specific method you want for your call
+  * `headers: Object`, additional headers for request
 
 Params are the same as above
 
