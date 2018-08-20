@@ -1,12 +1,13 @@
 {
   "name": "fetch-rest-connect",
-  "version": "1.0.0-beta.2",
-  "main": "index.js",
+  "version": "1.0.0",
+  "main": "dist/index.js",
   "repository": "https://github.com/drublic/fetch-rest-connect.git",
   "author": "Hans Christian Reinl <info@drublic.de>",
   "license": "MIT",
   "scripts": {
     "lint": "eslint **/*.js",
+    "build": "babel ./*.js -d dist",
     "test": "jest"
   },
   "jest": {
@@ -19,6 +20,7 @@
     ]
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
     "babel-preset-env": "^1.6.1",
