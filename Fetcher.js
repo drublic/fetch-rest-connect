@@ -27,10 +27,6 @@ class Fetcher {
     }
   }
 
-  static request(url, options) {
-    return fetch(url, options)
-  }
-
   constructor(config) {
     this.apiUrl = config.apiUrl
 
@@ -64,6 +60,12 @@ class Fetcher {
     return url
   }
 
+  /* eslint-disable */
+  request(url, options) {
+    return fetch(url, options)
+  }
+  /* eslint-enable */
+
   /* public */fetch(action, id, addinitinalParameters, data, method, headers) {
     const url = this.getUrl(action, id, addinitinalParameters)
 
@@ -81,7 +83,7 @@ class Fetcher {
       options.body = JSON.stringify(data)
     }
 
-    return Fetcher.request(url, options)
+    return this.request(url, options)
       .then((response) => {
         if (!response.ok) {
           return Fetcher.throwError(response.statusText)
