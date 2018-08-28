@@ -27,6 +27,10 @@ class Fetcher {
     }
   }
 
+  static request(url, options) {
+    return fetch(url, options)
+  }
+
   constructor(config) {
     this.apiUrl = config.apiUrl
 
@@ -77,7 +81,7 @@ class Fetcher {
       options.body = JSON.stringify(data)
     }
 
-    return fetch(url, options)
+    return Fetcher.request(url, options)
       .then((response) => {
         if (!response.ok) {
           return Fetcher.throwError(response.statusText)
