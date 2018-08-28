@@ -45,6 +45,11 @@ var Fetcher = function () {
         message: responseError
       };
     }
+  }, {
+    key: 'request',
+    value: function request(url, options) {
+      return fetch(url, options);
+    }
   }]);
 
   function Fetcher(config) {
@@ -88,17 +93,7 @@ var Fetcher = function () {
     /* public */
   }, {
     key: 'fetch',
-    value: function (_fetch) {
-      function fetch(_x, _x2, _x3, _x4, _x5, _x6) {
-        return _fetch.apply(this, arguments);
-      }
-
-      fetch.toString = function () {
-        return _fetch.toString();
-      };
-
-      return fetch;
-    }(function (action, id, addinitinalParameters, data, method, headers) {
+    value: function fetch(action, id, addinitinalParameters, data, method, headers) {
       var url = this.getUrl(action, id, addinitinalParameters);
 
       var headerConfig = Object.assign({
@@ -115,14 +110,14 @@ var Fetcher = function () {
         options.body = JSON.stringify(data);
       }
 
-      return fetch(url, options).then(function (response) {
+      return Fetcher.request(url, options).then(function (response) {
         if (!response.ok) {
           return Fetcher.throwError(response.statusText);
         }
 
         return response.json();
       }).catch(Fetcher.throwError);
-    })
+    }
 
     /**
      * Aliases

@@ -8,7 +8,8 @@
   "scripts": {
     "lint": "eslint **/*.js",
     "build": "babel ./*.js -d dist",
-    "test": "jest"
+    "test": "jest",
+    "prepublishOnly": "yarn build"
   },
   "jest": {
     "automock": false,
