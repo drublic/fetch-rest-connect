@@ -1,5 +1,5 @@
 import ENDPOINT_DATA from './data/foo'
-import Fetcher from '../'
+import Fetcher from '../Fetcher'
 
 const { fetch } = global
 
@@ -44,6 +44,12 @@ describe('Fetcher', () => {
 
     url = fetcher.getUrl(ENDPOINT, undefined, {
       env: 'bar',
+    })
+    expect(url).toBe(`/${ENDPOINT}/?env=bar`)
+
+    url = fetcher.getUrl(ENDPOINT, undefined, {
+      env: 'bar',
+      foo: undefined,
     })
     expect(url).toBe(`/${ENDPOINT}/?env=bar`)
   })

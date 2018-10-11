@@ -51,8 +51,15 @@ class Fetcher {
     }
 
     if (typeof addinitinalParameters === 'object') {
-      const params = Object.keys(addinitinalParameters)
-        .map(param => `${param}=${addinitinalParameters[param]}`)
+      const params = Object.entries(addinitinalParameters)
+        .map(([key, val]) => {
+          if (val) {
+            return `${key}=${val}`
+          }
+
+          return null
+        })
+        .filter(parameter => parameter !== null)
 
       url += `?${params.join('&')}`
     }
