@@ -15,39 +15,25 @@ describe('Fetcher', () => {
 
   fetch.mockResponse(JSON.stringify(ENDPOINT_DATA))
 
-  it('returns method for given data', () => {
-    let method = Fetcher.getMethod('GET', {
-      foo: 'bar',
-    })
-    expect(method).toBe('POST')
-
-    method = Fetcher.getMethod('GET', {
-      foo: 'bar',
-    }, ID)
-    expect(method).toBe('PUT')
-
-    method = Fetcher.getMethod('GET')
-    expect(method).toBe('GET')
-  })
-
   it('provides a complete url', () => {
-    let url = fetcher.getUrl(ENDPOINT)
+    let url = fetcher.getUri(ENDPOINT)
+
     expect(url).toBe(`/${ENDPOINT}/`)
 
-    url = fetcher.getUrl(ENDPOINT, ID)
+    url = fetcher.getUri(ENDPOINT, ID)
     expect(url).toBe(`/${ENDPOINT}/${ID}/`)
 
-    url = fetcher.getUrl(ENDPOINT, ID, {
+    url = fetcher.getUri(ENDPOINT, ID, undefined, {
       env: 'bar',
     })
     expect(url).toBe(`/${ENDPOINT}/${ID}/?env=bar`)
 
-    url = fetcher.getUrl(ENDPOINT, undefined, {
+    url = fetcher.getUri(ENDPOINT, undefined, undefined, {
       env: 'bar',
     })
     expect(url).toBe(`/${ENDPOINT}/?env=bar`)
 
-    url = fetcher.getUrl(ENDPOINT, undefined, {
+    url = fetcher.getUri(ENDPOINT, undefined, undefined, {
       env: 'bar',
       foo: undefined,
     })
@@ -56,7 +42,7 @@ describe('Fetcher', () => {
 
   it('throws if no action is provided while getting URL', () => {
     expect(() => {
-      fetcher.getUrl()
+      fetcher.getUri()
     }).toThrow()
   })
 

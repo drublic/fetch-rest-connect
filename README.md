@@ -23,12 +23,12 @@ All methods used provided by the package are asynchronous.
 
 ```javascript
 import Fetcher from 'fetch-rest-connect'
-const CONTENT_ENDPOINT = 'content/'
+const CONTENT_ENDPOINT = 'content'
 
 const fetcher = new Fetcher({
   apiUrl: `/api`,
   endpoints: {
-    [CONTENT_ENDPOINT]: 'content/',
+    [CONTENT_ENDPOINT]: '/content/',
   }
 })
 
@@ -43,6 +43,25 @@ const getContent = async () => {
 }
 ```
 
+Your API endpoints can also hold any kind of variable:
+
+```javascript
+const endpoints = {
+  [CONTENT_ENDPOINT]: '/article/:articleId/content/'
+}
+```
+
+When calling the fetcher you can now pass `uriParams` to fill the vars in the
+route.
+
+```javascript
+const articleId = `foo`;
+const uriParams = {
+  articleId,
+};
+const data = await fetcher.getAll(CONTENT_ENDPOINT, uriParams)
+```
+
 ### Methods
 
 All methods build upon the main method `fetch`:
@@ -50,6 +69,7 @@ All methods build upon the main method `fetch`:
 * `fetch`, Fetch entry point
   * `action: string`, Action or endpoint you want to call, required
   * `id: String`, If you want to call a specific ID of an endpoint, you can use this field
+  * `uriParams: Object`, If the endpoint has variables in it you can use this object to fill them
   * `addinitinalParameters: object`, Pass get parameters for the request
   * `data: Object`, Data you want to send with the request
   * `method: ENUM('GET' | 'PUT' | 'POST' | 'DELETE') = 'GET'`, Specific method you want for your call
@@ -57,12 +77,12 @@ All methods build upon the main method `fetch`:
 
 Params are the same as above
 
-* `get(action, id, addinitinalParameters)`
-* `getAll(action, addinitinalParameters)`
-* `create(action, data, addinitinalParameters)`
-* `update(action, id, data, addinitinalParameters)`
-* `upsert(action, id, data, addinitinalParameters)`
-* `delete(action, id, addinitinalParameters)`
+* `get(action, id, uriParams, addinitinalParameters)`
+* `getAll(action, uriParams, addinitinalParameters)`
+* `create(action, data, uriParams, addinitinalParameters)`
+* `update(action, id, data, uriParams, addinitinalParameters)`
+* `upsert(action, id, data, uriParams, addinitinalParameters)`
+* `delete(action, id, uriParams, addinitinalParameters)`
 
 ## License
 

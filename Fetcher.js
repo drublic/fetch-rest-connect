@@ -1,18 +1,9 @@
-import 'whatwg-fetch'
+import getMethod from './lib/getMethod'
+import request from './lib/request'
+import getQueryFromObject from './lib/getQueryFromObject'
+import resolveUriWithParams from './lib/resolveUriWithParams'
 
 class Fetcher {
-  static getMethod(method = 'GET', data, id) {
-    if (data) {
-      if (id) {
-        return 'PUT'
-      }
-
-      return 'POST'
-    }
-
-    return method
-  }
-
   static throwError(error) {
     let responseError
     try {
@@ -37,7 +28,7 @@ class Fetcher {
     this.endpoints = new Map(endpoints)
   }
 
-  getUrl(action, id, addinitinalParameters) {
+  getUri(action, id, uriParams, addinitinalParameters) {
     let url = this.apiUrl
 
     if (this.endpoints.has(action)) {
@@ -50,16 +41,10 @@ class Fetcher {
       url += `${id}/`
     }
 
-    if (typeof addinitinalParameters === 'object') {
-      const params = Object.entries(addinitinalParameters)
-        .map(([key, val]) => {
-          if (val) {
-            return `${key}=${val}`
-          }
+    url = resolveUriWithParams(url, uriParams)
 
-          return null
-        })
-        .filter(parameter => parameter !== null)
+    if (typeof addinitinalParameters === 'object') {
+      const params = getQueryFromObject(addinitinalParameters)
 
       url += `?${params.join('&')}`
     }
@@ -67,14 +52,16 @@ class Fetcher {
     return url
   }
 
-  /* eslint-disable */
-  request(url, options) {
-    return fetch(url, options)
-  }
-  /* eslint-enable */
-
-  /* public */fetch(action, id, addinitinalParameters, data, method, headers) {
-    const url = this.getUrl(action, id, addinitinalParameters)
+  /* public */fetch(
+    action,
+    id,
+    uriParams,
+    addinitinalParameters,
+    data,
+    method,
+    headers,
+  ) {
+    const url = this.getUri(action, id, uriParams, addinitinalParameters)
 
     const headerConfig = Object.assign({
       Accept: 'application/json',
@@ -83,14 +70,14 @@ class Fetcher {
 
     const options = {
       headers: new Headers(headerConfig),
-      method: method || Fetcher.getMethod(method, data, id),
+      method: method || getMethod(method, data, id),
     }
 
     if (data) {
       options.body = JSON.stringify(data)
     }
 
-    return this.request(url, options)
+    return request(url, options)
       .then((response) => {
         if (!response.ok) {
           return Fetcher.throwError(response.statusText)
@@ -104,34 +91,70 @@ class Fetcher {
   /**
    * Aliases
    */
-  /* public */getAll(endpoint, addinitinalParameters = {}) {
-    return this
-      .fetch(endpoint, undefined, addinitinalParameters, undefined, 'GET')
+  /* public */getAll(endpoint, uriParams = {}, addinitinalParameters = {}) {
+    return this.fetch(
+      endpoint,
+      undefined,
+      uriParams,
+      addinitinalParameters,
+      undefined,
+      'GET',
+    )
   }
 
-  /* public */get(endpoint, id, addinitinalParameters = {}) {
-    return this
-      .fetch(endpoint, id, addinitinalParameters, undefined, 'GET')
+  /* public */get(endpoint, id, uriParams = {}, addinitinalParameters = {}) {
+    return this.fetch(
+      endpoint,
+      id,
+      uriParams,
+      addinitinalParameters,
+      undefined,
+      'GET',
+    )
   }
 
-  /* public */create(endpoint, data, addinitinalParameters = {}) {
-    return this
-      .fetch(endpoint, undefined, addinitinalParameters, data, 'PUT')
+  /* public */create(endpoint, data, uriParams = {}, addinitinalParameters = {}) {
+    return this.fetch(
+      endpoint,
+      undefined,
+      uriParams,
+      addinitinalParameters,
+      data,
+      'PUT',
+    )
   }
 
-  /* public */update(endpoint, id, data, addinitinalParameters = {}) {
-    return this
-      .fetch(endpoint, id, addinitinalParameters, data, 'POST')
+  /* public */update(endpoint, id, data, uriParams = {}, addinitinalParameters = {}) {
+    return this.fetch(
+      endpoint,
+      id,
+      uriParams,
+      addinitinalParameters,
+      data,
+      'POST',
+    )
   }
 
-  /* public */upsert(endpoint, id, data, addinitinalParameters = {}) {
-    return this
-      .fetch(endpoint, id, addinitinalParameters, data, id ? 'POST' : 'PUT')
+  /* public */upsert(endpoint, id, data, uriParams = {}, addinitinalParameters = {}) {
+    return this.fetch(
+      endpoint,
+      id,
+      uriParams,
+      addinitinalParameters,
+      data,
+      id ? 'POST' : 'PUT',
+    )
   }
 
-  /* public */delete(endpoint, id, addinitinalParameters = {}) {
-    return this
-      .fetch(endpoint, id, addinitinalParameters, undefined, 'DELETE')
+  /* public */delete(endpoint, id, uriParams = {}, addinitinalParameters = {}) {
+    return this.fetch(
+      endpoint,
+      id,
+      uriParams,
+      addinitinalParameters,
+      undefined,
+      'DELETE',
+    )
   }
 }
 
