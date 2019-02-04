@@ -29,6 +29,9 @@ const fetcher = new Fetcher({
   apiUrl: `/api`,
   endpoints: {
     [CONTENT_ENDPOINT]: '/content/',
+  },
+  options: { // optional
+    credentials: 'include',
   }
 })
 
