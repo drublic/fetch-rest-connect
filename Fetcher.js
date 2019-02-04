@@ -28,7 +28,7 @@ class Fetcher {
     this.endpoints = new Map(endpoints)
   }
 
-  getUri(action, id, uriParams, addinitinalParameters) {
+  getUri(action, id, uriParams, additionalQueryParams) {
     let url = this.apiUrl
 
     if (this.endpoints.has(action)) {
@@ -43,8 +43,8 @@ class Fetcher {
 
     url = resolveUriWithParams(url, uriParams)
 
-    if (typeof addinitinalParameters === 'object') {
-      const params = getQueryFromObject(addinitinalParameters)
+    if (typeof additionalQueryParams === 'object') {
+      const params = getQueryFromObject(additionalQueryParams)
 
       url += `?${params.join('&')}`
     }
@@ -56,12 +56,12 @@ class Fetcher {
     action,
     id,
     uriParams,
-    addinitinalParameters,
+    additionalQueryParams,
     data,
     method,
     headers,
   ) {
-    const url = this.getUri(action, id, uriParams, addinitinalParameters)
+    const url = this.getUri(action, id, uriParams, additionalQueryParams)
 
     const headerConfig = Object.assign({
       Accept: 'application/json',
@@ -91,67 +91,67 @@ class Fetcher {
   /**
    * Aliases
    */
-  /* public */getAll(endpoint, uriParams = {}, addinitinalParameters = {}) {
+  /* public */getAll(endpoint, uriParams = {}, additionalQueryParams = {}) {
     return this.fetch(
       endpoint,
       undefined,
       uriParams,
-      addinitinalParameters,
+      additionalQueryParams,
       undefined,
       'GET',
     )
   }
 
-  /* public */get(endpoint, id, uriParams = {}, addinitinalParameters = {}) {
+  /* public */get(endpoint, id, uriParams = {}, additionalQueryParams = {}) {
     return this.fetch(
       endpoint,
       id,
       uriParams,
-      addinitinalParameters,
+      additionalQueryParams,
       undefined,
       'GET',
     )
   }
 
-  /* public */create(endpoint, data, uriParams = {}, addinitinalParameters = {}) {
+  /* public */create(endpoint, data, uriParams = {}, additionalQueryParams = {}) {
     return this.fetch(
       endpoint,
       undefined,
       uriParams,
-      addinitinalParameters,
+      additionalQueryParams,
       data,
       'PUT',
     )
   }
 
-  /* public */update(endpoint, id, data, uriParams = {}, addinitinalParameters = {}) {
+  /* public */update(endpoint, id, data, uriParams = {}, additionalQueryParams = {}) {
     return this.fetch(
       endpoint,
       id,
       uriParams,
-      addinitinalParameters,
+      additionalQueryParams,
       data,
       'POST',
     )
   }
 
-  /* public */upsert(endpoint, id, data, uriParams = {}, addinitinalParameters = {}) {
+  /* public */upsert(endpoint, id, data, uriParams = {}, additionalQueryParams = {}) {
     return this.fetch(
       endpoint,
       id,
       uriParams,
-      addinitinalParameters,
+      additionalQueryParams,
       data,
       id ? 'POST' : 'PUT',
     )
   }
 
-  /* public */delete(endpoint, id, uriParams = {}, addinitinalParameters = {}) {
+  /* public */delete(endpoint, id, uriParams = {}, additionalQueryParams = {}) {
     return this.fetch(
       endpoint,
       id,
       uriParams,
-      addinitinalParameters,
+      additionalQueryParams,
       undefined,
       'DELETE',
     )
