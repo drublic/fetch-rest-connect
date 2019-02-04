@@ -73,19 +73,19 @@ All methods build upon the main method `fetch`:
   * `action: string`, Action or endpoint you want to call, required
   * `id: String`, If you want to call a specific ID of an endpoint, you can use this field
   * `uriParams: Object`, If the endpoint has variables in it you can use this object to fill them
-  * `addinitinalParameters: object`, Pass get parameters for the request
+  * `additionalQueryParams: object`, Pass get parameters for the request
   * `data: Object`, Data you want to send with the request
   * `method: ENUM('GET' | 'PUT' | 'POST' | 'DELETE') = 'GET'`, Specific method you want for your call
   * `headers: Object`, additional headers for request
 
 Params are the same as above
 
-* `get(action, id, uriParams, addinitinalParameters)`
-* `getAll(action, uriParams, addinitinalParameters)`
-* `create(action, data, uriParams, addinitinalParameters)`
-* `update(action, id, data, uriParams, addinitinalParameters)`
-* `upsert(action, id, data, uriParams, addinitinalParameters)`
-* `delete(action, id, uriParams, addinitinalParameters)`
+* `get(action, id, uriParams, additionalQueryParams)`
+* `getAll(action, uriParams, additionalQueryParams)`
+* `create(action, data, uriParams, additionalQueryParams)`
+* `update(action, id, data, uriParams, additionalQueryParams)`
+* `upsert(action, id, data, uriParams, additionalQueryParams)`
+* `delete(action, id, uriParams, additionalQueryParams)`
 
 ## License
 
