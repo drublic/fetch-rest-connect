@@ -26,6 +26,7 @@ class Fetcher {
     ))
 
     this.endpoints = new Map(endpoints)
+    this.options = config.options || {}
   }
 
   getUri(action, id, uriParams, additionalQueryParams) {
@@ -63,12 +64,14 @@ class Fetcher {
   ) {
     const url = this.getUri(action, id, uriParams, additionalQueryParams)
 
-    const headerConfig = Object.assign({
+    const headerConfig = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-    }, headers)
+      ...headers,
+    }
 
     const options = {
+      ...this.options,
       headers: new Headers(headerConfig),
       method: method || getMethod(method, data, id),
     }
