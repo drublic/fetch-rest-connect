@@ -68,6 +68,7 @@ class Fetcher {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       ...headers,
+      ...this.options.headers,
     }
 
     const options = {
