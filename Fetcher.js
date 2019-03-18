@@ -124,7 +124,7 @@ class Fetcher {
       uriParams,
       additionalQueryParams,
       data,
-      'PUT',
+      'POST',
     )
   }
 
@@ -135,7 +135,7 @@ class Fetcher {
       uriParams,
       additionalQueryParams,
       data,
-      'POST',
+      'PUT',
     )
   }
 
@@ -146,7 +146,7 @@ class Fetcher {
       uriParams,
       additionalQueryParams,
       data,
-      id ? 'POST' : 'PUT',
+      id ? 'PUT' : 'POST',
     )
   }
 
