@@ -95,7 +95,12 @@ class Fetcher {
   /**
    * Aliases
    */
-  /* public */getAll(endpoint, uriParams = {}, additionalQueryParams = {}) {
+  /* public */getAll(
+    endpoint,
+    uriParams = {},
+    additionalQueryParams = {},
+    headers,
+  ) {
     return this.fetch(
       endpoint,
       undefined,
@@ -103,10 +108,17 @@ class Fetcher {
       additionalQueryParams,
       undefined,
       'GET',
+      headers,
     )
   }
 
-  /* public */get(endpoint, id, uriParams = {}, additionalQueryParams = {}) {
+  /* public */get(
+    endpoint,
+    id,
+    uriParams = {},
+    additionalQueryParams = {},
+    headers,
+  ) {
     return this.fetch(
       endpoint,
       id,
@@ -114,10 +126,17 @@ class Fetcher {
       additionalQueryParams,
       undefined,
       'GET',
+      headers,
     )
   }
 
-  /* public */create(endpoint, data, uriParams = {}, additionalQueryParams = {}) {
+  /* public */create(
+    endpoint,
+    data,
+    uriParams = {},
+    additionalQueryParams = {},
+    headers,
+  ) {
     return this.fetch(
       endpoint,
       undefined,
@@ -125,10 +144,18 @@ class Fetcher {
       additionalQueryParams,
       data,
       'POST',
+      headers,
     )
   }
 
-  /* public */update(endpoint, id, data, uriParams = {}, additionalQueryParams = {}) {
+  /* public */update(
+    endpoint,
+    id,
+    data,
+    uriParams = {},
+    additionalQueryParams = {},
+    headers,
+  ) {
     return this.fetch(
       endpoint,
       id,
@@ -136,10 +163,18 @@ class Fetcher {
       additionalQueryParams,
       data,
       'PUT',
+      headers,
     )
   }
 
-  /* public */upsert(endpoint, id, data, uriParams = {}, additionalQueryParams = {}) {
+  /* public */upsert(
+    endpoint,
+    id,
+    data,
+    uriParams = {},
+    additionalQueryParams = {},
+    headers,
+  ) {
     return this.fetch(
       endpoint,
       id,
@@ -147,10 +182,17 @@ class Fetcher {
       additionalQueryParams,
       data,
       id ? 'PUT' : 'POST',
+      headers,
     )
   }
 
-  /* public */delete(endpoint, id, uriParams = {}, additionalQueryParams = {}) {
+  /* public */delete(
+    endpoint,
+    id,
+    uriParams = {},
+    additionalQueryParams = {},
+    headers,
+  ) {
     return this.fetch(
       endpoint,
       id,
@@ -158,6 +200,7 @@ class Fetcher {
       additionalQueryParams,
       undefined,
       'DELETE',
+      headers,
     )
   }
 }

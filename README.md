@@ -80,12 +80,12 @@ All methods build upon the main method `fetch`:
 
 Params are the same as above
 
-* `get(action, id, uriParams, additionalQueryParams)`
-* `getAll(action, uriParams, additionalQueryParams)`
-* `create(action, data, uriParams, additionalQueryParams)`
-* `update(action, id, data, uriParams, additionalQueryParams)`
-* `upsert(action, id, data, uriParams, additionalQueryParams)`
-* `delete(action, id, uriParams, additionalQueryParams)`
+* `get(action, id, uriParams, additionalQueryParams, headers)`
+* `getAll(action, uriParams, additionalQueryParams, headers)`
+* `create(action, data, uriParams, additionalQueryParams, headers)`
+* `update(action, id, data, uriParams, additionalQueryParams, headers)`
+* `upsert(action, id, data, uriParams, additionalQueryParams, headers)`
+* `delete(action, id, uriParams, additionalQueryParams, headers)`
 
 ## License
 
