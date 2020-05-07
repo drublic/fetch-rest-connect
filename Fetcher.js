@@ -27,16 +27,19 @@ class Fetcher {
 
     this.endpoints = new Map(endpoints)
     this.options = config.options || {}
+    this.getFilter = config.getFilter
   }
 
   getUri(action, id, uriParams, additionalQueryParams) {
     let url = this.apiUrl
 
-    if (this.endpoints.has(action)) {
-      url += `${this.endpoints.get(action)}/`
-    } else {
+    if (!this.endpoints.has(action)) {
       throw new Error(`Action "${action}" not defined`)
     }
+
+    let endpoint = this.endpoints.get(action);
+
+    url += `${endpoint}/`
 
     if (id) {
       url += `${id}/`
@@ -44,11 +47,14 @@ class Fetcher {
 
     url = resolveUriWithParams(url, uriParams)
 
-    if (typeof additionalQueryParams === 'object') {
-      const params = getQueryFromObject(additionalQueryParams)
+    const filter = this.getFilter && this.getFilter(endpoint)
 
-      url += `?${params.join('&')}`
-    }
+    const params = [
+      ...getQueryFromObject(additionalQueryParams || {}),
+      ...getQueryFromObject(filter || {}),
+    ]
+
+    url += `?${params.join('&')}`
 
     return url
   }
