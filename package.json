@@ -40,7 +40,6 @@
     "regenerator-runtime": "^0.13.5"
   },
   "dependencies": {
-    "node-fetch": "^2.6.0",
-    "whatwg-fetch": "^3.0.0"
+    "node-fetch": "^2.6.0"
   }
 }

@@ -73,7 +73,7 @@ class Fetcher {
 
     const options = {
       ...this.options,
-      headers: new Headers(headerConfig),
+      headers: headerConfig,
       method: method || getMethod(method, data, id),
     }
 
