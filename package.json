@@ -6,8 +6,9 @@
   "author": "Hans Christian Reinl <info@drublic.de>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint **/*.js",
-    "build": "rm -rf dist/ && babel . --ignore node_modules,coverage -d dist",
+    "dev": "nodemon src/index.ts",
+    "lint": "eslint ./src/{**/,}* --ext js,ts",
+    "build": "tsc",
     "test": "jest",
     "prepublishOnly": "yarn build"
   },
@@ -17,29 +18,31 @@
       "./jestSetup.js"
     ],
     "testURL": "http://localhost",
-    "testMatch": [
-      "**/__tests__/**/*.test.js?(x)"
-    ],
     "testPathIgnorePatterns": [
-      "/dist/",
+      "/build/",
       "/node_modules/"
     ]
   },
-  "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.0.1",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "jest": "^26.0.1",
-    "jest-fetch-mock": "^3.0.3",
-    "regenerator-runtime": "^0.13.5"
-  },
   "dependencies": {
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "jest-fetch-mock": "^3.0.3",
+    "regenerator-runtime": "^0.13.5",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^12.12.31",
+    "@types/node-fetch": "^2.5.5",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^26.0.1",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "supertest": "^4.0.2",
+    "ts-jest": "^25.2.1",
+    "ts-node": "^8.8.1",
+    "typescript": "^3.8.3"
   }
 }
