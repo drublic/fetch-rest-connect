@@ -2,7 +2,7 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
   testURL: "http://localhost",
-  testMatch: ["**/__tests__/{**/,}*.ts"],
+  testMatch: ["<rootDir>/src/__tests__/{**/,}*.ts"],
   moduleFileExtensions: ["js", "ts"],
-  testPathIgnorePatterns: ["/build/", "/node_modules/"],
+  testPathIgnorePatterns: ["<rootDir>/build/", "<rootDir>/node_modules/"],
 };
