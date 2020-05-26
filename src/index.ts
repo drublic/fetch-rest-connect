@@ -7,7 +7,7 @@ const throwError = (error) => {
   let responseError;
 
   try {
-    responseError = JSON.parse(error);
+    responseError = JSON.parse(error.body());
   } catch (e) {
     responseError = error;
   }
