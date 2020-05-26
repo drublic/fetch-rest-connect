@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "module": "CommonJS",
+    "module": "commonjs",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
     "noImplicitReturns": true,
@@ -12,9 +8,8 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES5",
+    "target": "es2015",
     "declaration": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src/**/*"]
 }
