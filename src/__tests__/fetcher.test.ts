@@ -1,7 +1,23 @@
-import ENDPOINT_DATA from "./data/foo";
-import Fetcher from "../Fetcher";
+import Fetcher from "..";
 
-const { fetch } = global;
+const ENDPOINT_DATA = {
+  foo: "bar",
+};
+
+jest.mock("node-fetch", () => (request) => {
+  if (request.includes("failure")) {
+    return {
+      some: "error",
+    };
+  }
+
+  return {
+    ok: true,
+    json: () => ({
+      foo: "bar",
+    }),
+  };
+});
 
 describe("Fetcher", () => {
   const ENDPOINT = "foo";
@@ -12,8 +28,6 @@ describe("Fetcher", () => {
       [ENDPOINT]: ENDPOINT,
     },
   });
-
-  fetch.mockResponse(JSON.stringify(ENDPOINT_DATA));
 
   it("provides a complete url", () => {
     let url = fetcher.getUri(ENDPOINT);
@@ -42,39 +56,33 @@ describe("Fetcher", () => {
 
   it("throws if no action is provided while getting URL", () => {
     expect(() => {
-      fetcher.getUri();
+      (fetcher as any).getUri();
     }).toThrow();
   });
 
-  it("gets data from endpoint", (done) => {
-    expect.assertions(1);
+  it("gets data from endpoint", async () => {
+    const response = await fetcher.fetch(ENDPOINT, ID);
 
-    fetcher.fetch(ENDPOINT, ID).then((data) => {
-      expect(data).toEqual(ENDPOINT_DATA);
-      done();
-    });
+    expect(response).toEqual(ENDPOINT_DATA);
   });
 
-  it("posts data to api", (done) => {
-    fetcher
-      .fetch(ENDPOINT, ID, undefined, {
-        foo: "baz",
-      })
-      .then((data) => {
-        expect(data).toEqual(ENDPOINT_DATA);
-        done();
-      });
+  it("posts data to api", async () => {
+    const response = await fetcher.fetch(ENDPOINT, ID, undefined, {
+      foo: "baz",
+    });
+
+    expect(response).toEqual(ENDPOINT_DATA);
   });
 
-  it("returns error if rejected", (done) => {
-    fetch.mockRejectOnce(JSON.stringify(ENDPOINT_DATA));
+  it("returns error if rejected", async () => {
+    const response = await fetcher.fetch(ENDPOINT, "failure");
 
-    fetcher.fetch(ENDPOINT).then((data) => {
-      expect(data).toEqual({
-        error: true,
-        message: ENDPOINT_DATA,
-      });
-      done();
-    });
+    expect(response.error).toBeTruthy();
+  });
+
+  it("returns error with meaningful error", async () => {
+    const response = await fetcher.fetch(ENDPOINT, "failure");
+
+    expect(response.data.some).toBeTruthy();
   });
 });

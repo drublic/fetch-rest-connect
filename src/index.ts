@@ -14,7 +14,8 @@ const throwError = (error) => {
 
   return {
     error: true,
-    message: responseError,
+    data: responseError,
+    message: responseError.message,
   };
 };
 
@@ -47,7 +48,7 @@ class Fetcher {
     this.getFilter = config.getFilter;
   }
 
-  getUri(action, id, uriParams, additionalQueryParams) {
+  getUri(action, id?, uriParams?, additionalQueryParams?) {
     let url = this.apiUrl;
 
     if (!this.endpoints.has(action)) {
@@ -71,19 +72,21 @@ class Fetcher {
       ...(getQueryFromObject(filter) || []),
     ];
 
-    url += `?${params.join("&")}`;
+    if (params.length > 0) {
+      url += `?${params.join("&")}`;
+    }
 
     return url;
   }
 
   public async fetch(
     action,
-    id,
-    uriParams,
-    additionalQueryParams,
-    data,
-    method,
-    headers,
+    id?,
+    uriParams?,
+    additionalQueryParams?,
+    data?,
+    method?,
+    headers?,
   ) {
     const url = this.getUri(action, id, uriParams, additionalQueryParams);
 
@@ -108,7 +111,7 @@ class Fetcher {
       const response = await request(url, options);
 
       if (!response.ok) {
-        return throwError(response.statusText);
+        return throwError(response);
       }
 
       return response.json();
@@ -120,7 +123,12 @@ class Fetcher {
   /**
    * Aliases
    */
-  public getAll(endpoint, uriParams = {}, additionalQueryParams = {}, headers) {
+  public getAll(
+    endpoint,
+    uriParams = {},
+    additionalQueryParams = {},
+    headers?,
+  ) {
     return this.fetch(
       endpoint,
       undefined,
@@ -137,7 +145,7 @@ class Fetcher {
     id,
     uriParams = {},
     additionalQueryParams = {},
-    headers,
+    headers?,
   ) {
     return this.fetch(
       endpoint,
@@ -155,7 +163,7 @@ class Fetcher {
     data,
     uriParams = {},
     additionalQueryParams = {},
-    headers,
+    headers?,
   ) {
     return this.fetch(
       endpoint,
@@ -174,7 +182,7 @@ class Fetcher {
     data,
     uriParams = {},
     additionalQueryParams = {},
-    headers,
+    headers?,
   ) {
     return this.fetch(
       endpoint,
@@ -193,7 +201,7 @@ class Fetcher {
     data,
     uriParams = {},
     additionalQueryParams = {},
-    headers,
+    headers?,
   ) {
     return this.fetch(
       endpoint,

@@ -1,4 +1,4 @@
-const getMethod = (method = "GET", data, id) => {
+const getMethod = (method = "GET", data?, id?) => {
   if (data) {
     if (id) {
       return "PUT";
