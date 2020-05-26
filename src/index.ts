@@ -3,11 +3,11 @@ import request from "./lib/request";
 import getQueryFromObject from "./lib/getQueryFromObject";
 import resolveUriWithParams from "./lib/resolveUriWithParams";
 
-const throwError = (error) => {
+const throwError = async (error) => {
   let responseError;
 
   try {
-    responseError = JSON.parse(error.body());
+    responseError = await error.json();
   } catch (e) {
     responseError = error;
   }
