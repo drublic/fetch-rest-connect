@@ -15,7 +15,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@types/jest": "^25.2.3",
